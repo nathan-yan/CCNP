@@ -107,6 +107,8 @@ router ospf 1
  network 192.168.6.0 0.0.0.3 area 0
  network 192.168.33.0 0.0.0.3 area 3
 !
+ipv6 router ospf 1
+!
 ip forward-protocol nd
 !
 no ip http server

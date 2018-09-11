@@ -1,15 +1,15 @@
-   Building configuration...
+Building configuration...
 
 
-Current configuration : 1950 bytes
+Current configuration : 1876 bytes
 !
-! Last configuration change at 19:14:41 UTC Mon Sep 10 2018
+! Last configuration change at 14:45:37 UTC Tue Sep 11 2018
 version 15.2
 service timestamps debug datetime msec
 service timestamps log datetime msec
 no service password-encryption
 !
-hostname R3
+hostname R2
 !
 boot-start-marker
 boot-end-marker
@@ -50,7 +50,7 @@ voice-card 0
 !
 !
 !
-license udi pid CISCO2901/K9 sn FTX1520806W
+license udi pid CISCO2901/K9 sn FTX1520806D
 license accept end user agreement
 license boot module c2900 technology-package uck9
 !
@@ -78,16 +78,16 @@ interface Embedded-Service-Engine0/0
  shutdown
 !
 interface GigabitEthernet0/0
- ip address 192.168.33.1 255.255.255.252
+ ip address 192.168.22.1 255.255.255.252
+ ip ospf 1 area 2
  duplex auto
  speed auto
  ipv6 address FE80::1 link-local
- ipv6 address 2001:ACAD::33:1/125
- ipv6 enable
- ipv6 ospf 1 area 3
+ ipv6 address 2001:ACAD::22:1/125
+ ipv6 ospf 1 area 2
 !
 interface GigabitEthernet0/1
- ip address 192.168.6.2 255.255.255.252
+ ip address 192.168.5.2 255.255.255.252
  duplex auto
  speed auto
 !
@@ -102,27 +102,22 @@ interface Serial0/0/1
  clock rate 2000000
 !
 interface GigabitEthernet0/1/0
- ip address 192.168.4.2 255.255.255.252
+ ip address 192.168.6.1 255.255.255.252
  duplex auto
  speed auto
- ipv6 address FE80::1 link-local
- ipv6 address 2001:ACAD::4:2/125
- ipv6 enable
- ipv6 ospf 1 area 0
 !
 !
 router ospfv3 1
- router-id 3.3.3.3
  !
-ipv6 router ospf 1
-!
  address-family ipv6 unicast
+  router-id 2.2.2.2
  exit-address-family
 !
 router ospf 1
- network 192.168.4.0 0.0.0.3 area 0
+ router-id 2.2.2.2
+ network 192.168.5.0 0.0.0.3 area 0
  network 192.168.6.0 0.0.0.3 area 0
- network 192.168.33.0 0.0.0.3 area 3
+ network 192.168.22.0 0.0.0.3 area 2
 !
 ip forward-protocol nd
 !
@@ -167,3 +162,4 @@ line vty 0 4
 scheduler allocate 20000 1000
 !
 end
+

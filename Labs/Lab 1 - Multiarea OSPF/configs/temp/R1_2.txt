@@ -116,6 +116,8 @@ interface GigabitEthernet0/1/0
 router ospfv3 1
  router-id 1.1.1.1
  !
+ipv6 router ospf 1
+!
  address-family ipv6 unicast
  exit-address-family
 !
