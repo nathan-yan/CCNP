@@ -1,6 +1,9 @@
-Current configuration : 4053 bytes
+
+Building configuration...
+
+Current configuration : 3574 bytes
 !
-! Last configuration change at 00:50:28 UTC Mon Mar 1 1993
+! Last configuration change at 00:20:32 UTC Mon Mar 1 1993
 !
 version 12.2
 no service pad
@@ -8,7 +11,7 @@ service timestamps debug datetime msec
 service timestamps log datetime msec
 no service password-encryption
 !
-hostname Switch1
+hostname S1
 !
 boot-start-marker
 boot-end-marker
@@ -21,7 +24,8 @@ ip routing
 !
 !
 !
-vtp domain CCNP
+ipv6 unicast-routing
+vtp domain cisco
 vtp mode transparent
 !
 !
@@ -70,12 +74,17 @@ vlan 996
 !
 !
 !
+interface Loopback0
+ no ip address
+!
 interface Loopback1
  ip address 192.168.3.1 255.255.255.252
 !
 interface FastEthernet1/0/1
  no switchport
  ip address 192.168.33.2 255.255.255.252
+ ipv6 address 2001:ACAD::33:2/125
+ ipv6 ospf 1 area 3
 !
 interface FastEthernet1/0/2
 !
@@ -136,8 +145,6 @@ interface Vlan1
  no ip address
 !
 router ospf 1
- router-id 6.6.6.6
- network 192.168.3.0 0.0.0.3 area 3
  network 192.168.33.0 0.0.0.3 area 3
 !
 !
@@ -146,35 +153,20 @@ ip http secure-server
 !
 !
 logging esm config
-access-list 101 permit tcp any 192.168.1.0 0.0.0.255 eq www
-access-list 102 permit tcp any 192.168.1.0 0.0.0.255 eq 443
-access-list 103 permit tcp any host 192.168.2.2 eq www
-access-list 104 permit tcp any host 192.168.2.3 eq 443
+ipv6 router ospf 1
 !
-route-map PBR permit 10
- match ip address 101 102
- set interface FastEthernet1/0/2 FastEthernet1/0/4
-!
-route-map PBR1 permit 10
- match ip address 103
- set ip next-hop 192.168.2.2
-!
-route-map PBR1 permit 20
- match ip address 104
- set ip next-hop 192.168.3.2
-!
-route-map PBR2 permit 10
- match ip address 103
- set ip next-hop 192.168.2.2
-!
-route-map PBR2 permit 20
- match ip address 104
- set ip next-hop 192.168.2.3
 !
 !
 !
 line con 0
-line vty 0 4
+line vty 0
+ login
+line vty 1
+ login
+ no exec
+ transport preferred none
+ transport input all
+line vty 2 4
  login
 line vty 5 15
  login

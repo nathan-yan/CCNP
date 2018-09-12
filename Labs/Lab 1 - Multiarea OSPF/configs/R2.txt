@@ -1,9 +1,9 @@
 Building configuration...
 
 
-Current configuration : 1679 bytes
+Current configuration : 1992 bytes
 !
-! Last configuration change at 17:31:45 UTC Tue Sep 4 2018
+! Last configuration change at 14:43:23 UTC Wed Sep 12 2018
 version 15.2
 service timestamps debug datetime msec
 service timestamps log datetime msec
@@ -30,7 +30,8 @@ ip cef
 !
 !
 !
-no ipv6 cef
+ipv6 unicast-routing
+ipv6 cef
 !
 multilink bundle-name authenticated
 !
@@ -81,11 +82,17 @@ interface GigabitEthernet0/0
  ip ospf 1 area 2
  duplex auto
  speed auto
+ ipv6 address 2001:ACAD::22:1/125
+ ipv6 enable
+ ospfv3 1 ipv6 area 2
 !
 interface GigabitEthernet0/1
  ip address 192.168.5.2 255.255.255.252
  duplex auto
  speed auto
+ ipv6 address 2001:AAD::5:2/125
+ ipv6 enable
+ ospfv3 1 ipv6 area 0
 !
 interface Serial0/0/0
  no ip address
@@ -101,7 +108,16 @@ interface GigabitEthernet0/1/0
  ip address 192.168.6.1 255.255.255.252
  duplex auto
  speed auto
+ ipv6 address 2001:AAD::6:2/125
+ ipv6 enable
+ ospfv3 1 ipv6 area 0
 !
+!
+router ospfv3 1
+ !
+ address-family ipv6 unicast
+  router-id 2.2.2.2
+ exit-address-family
 !
 router ospf 1
  router-id 2.2.2.2
@@ -152,3 +168,4 @@ line vty 0 4
 scheduler allocate 20000 1000
 !
 end
+
