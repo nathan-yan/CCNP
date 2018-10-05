@@ -1,0 +1,169 @@
+Building configuration...
+
+Current configuration : 3531 bytes
+!
+! Last configuration change at 01:01:44 UTC Mon Mar 1 1993
+!
+version 12.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname S1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+system mtu routing 1500
+ip routing
+!
+!
+!
+ipv6 unicast-routing
+vtp domain cisco
+vtp mode transparent
+!
+!
+crypto pki trustpoint TP-self-signed-666920320
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-666920320
+ revocation-check none
+ rsakeypair TP-self-signed-666920320
+!
+!
+crypto pki certificate chain TP-self-signed-666920320
+ certificate self-signed 01
+  3082023C 308201A5 A0030201 02020101 300D0609 2A864886 F70D0101 04050030
+  30312E30 2C060355 04031325 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 36363639 32303332 30301E17 0D393330 33303130 30303130
+  315A170D 32303031 30313030 30303030 5A303031 2E302C06 03550403 1325494F
+  532D5365 6C662D53 69676E65 642D4365 72746966 69636174 652D3636 36393230
+  33323030 819F300D 06092A86 4886F70D 01010105 0003818D 00308189 02818100
+  C05EECB3 68F9B6C6 4839915B 207BDEF7 412BE06F 8859393E 41984429 23AFF5DC
+  ABF031D7 8AD9058F D6E742A9 663AFC8A E761F18B 4A03135B F86D1C6F 6A7F0207
+  F06A2306 5D7BB7C3 431326E5 7841FA8E 5E97236E 0D0C8703 D4FCD8D5 E138F82C
+  03B75E76 6CB0981C 2EF6BF9C 7409E47E 5C55E270 6423BF1D 5D9CD831 D7C428BD
+  02030100 01A36630 64300F06 03551D13 0101FF04 05300301 01FF3011 0603551D
+  11040A30 08820653 77697463 68301F06 03551D23 04183016 8014C000 A68B7173
+  5E8F86CC EE5BEEC1 1341A530 E05B301D 0603551D 0E041604 14C000A6 8B71735E
+  8F86CCEE 5BEEC113 41A530E0 5B300D06 092A8648 86F70D01 01040500 03818100
+  8CA6AB8F BEFF93D6 B56EFE74 E0482419 3660DA6A 17DE5E1D 9FE06794 E946D9B0
+  33C54A1A 1677F482 5EF5418E B4B65BEC 9404928E B8C171F0 CFC1B005 2A581310
+  8F3FC10A EFC46DFC BEECCC2C 6554CAE4 07ECB74D 01A8DFB1 ECA2F3A0 0BA9E615
+  CDFB3A37 D6419BDE 67F520A5 370750C0 09448BFA AA2C35C2 636F7B51 DE69725C
+        quit
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+!
+!
+!
+vlan internal allocation policy ascending
+!
+vlan 996
+ name CUSTOMER_NATIVE
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ no ip address
+!
+interface Loopback1
+ ip address 192.168.3.1 255.255.255.252
+!
+interface FastEthernet1/0/1
+ no switchport
+ ip address 192.168.33.2 255.255.255.252
+ ipv6 address 2001:ACAD::33:2/125
+ ipv6 ospf 1 area 3
+!
+interface FastEthernet1/0/2
+!
+interface FastEthernet1/0/3
+!
+interface FastEthernet1/0/4
+!
+interface FastEthernet1/0/5
+!
+interface FastEthernet1/0/6
+!
+interface FastEthernet1/0/7
+!
+interface FastEthernet1/0/8
+!
+interface FastEthernet1/0/9
+!
+interface FastEthernet1/0/10
+!
+interface FastEthernet1/0/11
+!
+interface FastEthernet1/0/12
+!
+interface FastEthernet1/0/13
+!
+interface FastEthernet1/0/14
+!
+interface FastEthernet1/0/15
+!
+interface FastEthernet1/0/16
+!
+interface FastEthernet1/0/17
+!
+interface FastEthernet1/0/18
+!
+interface FastEthernet1/0/19
+!
+interface FastEthernet1/0/20
+!
+interface FastEthernet1/0/21
+!
+interface FastEthernet1/0/22
+!
+interface FastEthernet1/0/23
+!
+interface FastEthernet1/0/24
+!
+interface GigabitEthernet1/0/1
+!
+interface GigabitEthernet1/0/2
+!
+interface GigabitEthernet1/1/1
+ speed auto 1000
+!
+interface GigabitEthernet1/1/2
+!
+interface Vlan1
+ no ip address
+!
+router ospf 1
+ area 3 stub
+ network 192.168.3.0 0.0.0.3 area 3
+ network 192.168.33.0 0.0.0.3 area 3
+!
+!
+ip http server
+ip http secure-server
+!
+!
+logging esm config
+ipv6 router ospf 1
+!
+!
+!
+!
+line con 0
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+end
+

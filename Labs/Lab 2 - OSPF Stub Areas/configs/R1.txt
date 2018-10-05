@@ -1,0 +1,170 @@
+Building configuration...
+
+
+Current configuration : 2010 bytes
+!
+! Last configuration change at 17:31:16 UTC Wed Oct 3 2018
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+memory-size iomem 10
+!
+ip cef
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+ipv6 unicast-routing
+ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+voice-card 0
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CISCO2901/K9 sn FTX1528859W
+license accept end user agreement
+license boot module c2900 technology-package uck9
+!
+!
+vtp domain cisco
+vtp mode transparent
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Embedded-Service-Engine0/0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/0
+ ip address 192.168.11.1 255.255.255.252
+ duplex auto
+ speed auto
+ ipv6 address 2001:ACAD::11:1/125
+ ipv6 enable
+ ospfv3 1 ipv6 area 1
+!
+interface GigabitEthernet0/1
+ ip address 192.168.4.1 255.255.255.252
+ duplex auto
+ speed auto
+ ipv6 address 2001:ACAD::4:1/125
+ ipv6 enable
+ ospfv3 1 ipv6 area 0
+!
+interface Serial0/0/0
+ no ip address
+ shutdown
+ clock rate 2000000
+!
+interface Serial0/0/1
+ no ip address
+ shutdown
+ clock rate 2000000
+!
+interface GigabitEthernet0/1/0
+ ip address 192.168.5.1 255.255.255.252
+ duplex auto
+ speed auto
+ ipv6 address 2001:ACAD::5:1/125
+ ospfv3 1 ipv6 area 0
+!
+!
+router ospfv3 1
+ router-id 1.1.1.1
+ !
+ address-family ipv6 unicast
+ exit-address-family
+!
+router ospf 1
+ router-id 1.1.1.1
+ area 1 stub
+ network 192.126.5.0 0.0.0.3 area 0
+ network 192.168.4.0 0.0.0.3 area 0
+ network 192.168.5.0 0.0.0.3 area 0
+ network 192.168.11.0 0.0.0.3 area 1
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+!
+control-plane
+!
+ !
+ !
+ !
+!
+!
+!
+mgcp profile default
+!
+!
+!
+!
+!
+gatekeeper
+ shutdown
+!
+!
+!
+line con 0
+line aux 0
+line 2
+ no activation-character
+ no exec
+ transport preferred none
+ transport output lat pad telnet rlogin lapb-ta mop udptn v120 ssh
+ stopbits 1
+line vty 0 4
+ login
+ transport input all
+!
+scheduler allocate 20000 1000
+!
+end
