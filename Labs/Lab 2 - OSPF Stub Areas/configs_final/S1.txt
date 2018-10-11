@@ -1,0 +1,179 @@
+Building configuration...
+
+Current configuration : 3814 bytes
+!
+version 12.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname S1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+system mtu routing 1500
+ip routing
+!
+!
+!
+vtp domain CCNP
+vtp mode transparent
+!
+!
+crypto pki trustpoint TP-self-signed-1380261888
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-1380261888
+ revocation-check none
+ rsakeypair TP-self-signed-1380261888
+!
+!
+crypto pki certificate chain TP-self-signed-1380261888
+ certificate self-signed 01
+  3082023E 308201A7 A0030201 02020101 300D0609 2A864886 F70D0101 04050030
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 31333830 32363138 3838301E 170D3933 30333031 30303031
+  30315A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D31 33383032
+  36313838 3830819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281
+  8100EEEA E5FF2E26 6F206F3B 9EB164F6 8E369DCB 832AC43E 8ECD71D5 1ABA44F8
+  7AEB84C4 779407FD 941D11FB 870C7B10 35800A15 B13B926F 85452DBF DD776BDA
+  524831E5 CD648098 B213A493 7DFD806D EF05B929 A2ABE01D 7FC4FB5A C34D7EC4
+  0B8A49D2 2B24BC9B 07D5F806 A6676B49 F03F8EBF 5033A37C F7155F3B DE06AD4F
+  37430203 010001A3 66306430 0F060355 1D130101 FF040530 030101FF 30110603
+  551D1104 0A300882 06537769 74636830 1F060355 1D230418 30168014 8C2F3CB6
+  6BAC862A 303EDADB 0C494158 ACE325E9 301D0603 551D0E04 1604148C 2F3CB66B
+  AC862A30 3EDADB0C 494158AC E325E930 0D06092A 864886F7 0D010104 05000381
+  810010E6 ED8DDFB9 413D8243 8D1B7160 AAD3BC07 2327FCAD 1CA5FEFA 5733718C
+  70421FFC 01CDE4F5 4ECCF92E 0AB4EF9D E436D846 62745CFE 1BAFAAC9 A417058C
+  AE38EA21 629E69DA F4124CCB D3DEA192 CD9AEF72 5F9C445B FA0C9BD0 8AEBA15F
+  5A9C57F9 BFCC6C02 F93097ED 19D14317 40B4B7A0 A4C9BD48 5B98F0F2 EBDB1D34 289F
+        quit
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+!
+!
+!
+vlan internal allocation policy ascending
+!
+vlan 996
+ name CUSTOMER_NATIVE
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet1/0/1
+ no switchport
+ ip address 192.168.5.1 255.255.255.252
+ ipv6 address 2001:5::1/64
+!
+interface FastEthernet1/0/2
+ no switchport
+ ip address 192.168.2.2 255.255.255.252
+ ipv6 address 2001:2::2/64
+!
+interface FastEthernet1/0/3
+!
+interface FastEthernet1/0/4
+!
+interface FastEthernet1/0/5
+!
+interface FastEthernet1/0/6
+!
+interface FastEthernet1/0/7
+!
+interface FastEthernet1/0/8
+!
+interface FastEthernet1/0/9
+!
+interface FastEthernet1/0/10
+!
+interface FastEthernet1/0/11
+!
+interface FastEthernet1/0/12
+!
+interface FastEthernet1/0/13
+!
+interface FastEthernet1/0/14
+!
+interface FastEthernet1/0/15
+!
+interface FastEthernet1/0/16
+!
+interface FastEthernet1/0/17
+!
+interface FastEthernet1/0/18
+!
+interface FastEthernet1/0/19
+!
+interface FastEthernet1/0/20
+!
+interface FastEthernet1/0/21
+!
+interface FastEthernet1/0/22
+!
+interface FastEthernet1/0/23
+!
+interface FastEthernet1/0/24
+!
+interface GigabitEthernet1/0/1
+!
+interface GigabitEthernet1/0/2
+!
+interface GigabitEthernet1/1/1
+ speed auto 1000
+!
+interface GigabitEthernet1/1/2
+!
+interface Vlan1
+ no ip address
+!
+!
+router eigrp 1
+ network 192.168.2.0 0.0.0.3
+ network 192.168.8.0 0.0.0.3
+!
+router ospf 1
+ area 3 authentication
+ area 3 nssa translate type7 suppress-fa
+ summary-address 192.168.0.0 255.255.254.0
+ redistribute static
+ redistribute rip subnets
+ network 192.168.2.0 0.0.0.3 area 0
+ network 192.168.5.0 0.0.0.3 area 3
+!
+router rip
+ version 2
+ network 192.168.2.0
+ network 192.168.5.0
+ no auto-summary
+!
+!
+ip http server
+ip http secure-server
+!
+!
+ip sla enable reaction-alerts
+logging esm config
+!
+!
+!
+line con 0
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+!
+monitor session 1 source interface Fa1/0/1
+monitor session 1 destination interface Fa1/0/5
+end
+
