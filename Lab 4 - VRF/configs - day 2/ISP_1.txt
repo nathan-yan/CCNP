@@ -1,0 +1,181 @@
+Building configuration...
+
+
+Current configuration : 2154 bytes
+!
+! Last configuration change at 18:39:12 UTC Thu Jan 10 2019
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname ISP_1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+memory-size iomem 5
+!
+ip cef
+!
+!
+!
+!
+
+
+!
+ip vrf apple
+!
+ip vrf samsung
+!
+!
+!
+!
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+voice-card 0
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CISCO2901/K9 sn FTX1520806D
+license accept end user agreement
+license boot module c2900 technology-package uck9
+!
+!
+vtp domain cisco
+vtp mode transparent
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Embedded-Service-Engine0/0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/0
+ no ip address
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/0.1
+ encapsulation dot1Q 10
+ ip vrf forwarding apple
+ ip address 10.0.2.1 255.255.255.0
+!
+interface GigabitEthernet0/0.2
+ encapsulation dot1Q 20
+ ip vrf forwarding samsung
+ ip address 10.0.2.2 255.255.255.0
+!
+interface GigabitEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1.1
+ encapsulation dot1Q 10
+ ip vrf forwarding apple
+ ip address 10.0.1.11 255.255.255.0
+!
+interface GigabitEthernet0/1.2
+ encapsulation dot1Q 20
+ ip vrf forwarding samsung
+ ip address 10.0.1.22 255.255.255.0
+!
+interface Serial0/0/0
+ no ip address
+ shutdown
+ clock rate 2000000
+!
+interface Serial0/0/1
+ no ip address
+ shutdown
+ clock rate 2000000
+!
+interface GigabitEthernet0/1/0
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+!
+router ospf 2 vrf samsung
+ network 10.0.1.0 0.0.0.255 area 0
+ network 10.0.2.0 0.0.0.255 area 0
+!
+router ospf 1 vrf apple
+ network 10.0.1.0 0.0.0.255 area 0
+ network 10.0.2.0 0.0.0.255 area 0
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+!
+control-plane
+!
+ !
+ !
+ !
+!
+!
+!
+mgcp profile default
+!
+!
+!
+!
+!
+gatekeeper
+ shutdown
+!
+!
+!
+line con 0
+line aux 0
+line 2
+ no activation-character
+ no exec
+ transport preferred none
+ transport output lat pad telnet rlogin lapb-ta mop udptn v120 ssh
+ stopbits 1
+line vty 0 4
+ login
+ transport input all
+!
+scheduler allocate 20000 1000
+!
+end
+
