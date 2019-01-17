@@ -1,0 +1,153 @@
+Enter configuration commands, one per line.  End with CNTL/Z.
+ISP_SWITCH_1(config)#do show run
+Building configuration...
+
+Current configuration : 2043 bytes
+!
+! Last configuration change at 00:49:42 UTC Mon Mar 1 1993
+!
+version 12.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname ISP_SWITCH_1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+system mtu routing 1500
+ip routing
+!
+ip vrf apple
+!
+ip vrf samsung
+!
+!
+!
+vtp domain cisco
+vtp mode transparent
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+!
+!
+!
+vlan internal allocation policy ascending
+!
+vlan 2
+!
+vlan 10
+ name apple
+!
+vlan 20
+ name samsung
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet1/0/1
+!
+interface FastEthernet1/0/2
+ switchport trunk encapsulation dot1q
+ switchport trunk allowed vlan 1,2
+ switchport mode trunk
+!
+interface FastEthernet1/0/3
+ switchport access vlan 2
+!
+interface FastEthernet1/0/4
+!
+interface FastEthernet1/0/5
+!
+interface FastEthernet1/0/6
+!
+interface FastEthernet1/0/7
+!
+interface FastEthernet1/0/8
+!
+interface FastEthernet1/0/9
+!
+interface FastEthernet1/0/10
+!
+interface FastEthernet1/0/11
+!
+interface FastEthernet1/0/12
+!
+interface FastEthernet1/0/13
+!
+interface FastEthernet1/0/14
+!
+interface FastEthernet1/0/15
+!
+interface FastEthernet1/0/16
+!
+interface FastEthernet1/0/17
+!
+interface FastEthernet1/0/18
+!
+interface FastEthernet1/0/19
+!
+interface FastEthernet1/0/20
+!
+interface FastEthernet1/0/21
+!
+interface FastEthernet1/0/22
+!
+interface FastEthernet1/0/23
+!
+interface FastEthernet1/0/24
+!
+interface GigabitEthernet1/0/1
+!
+interface GigabitEthernet1/0/2
+!
+interface GigabitEthernet1/1/1
+ speed auto 1000
+!
+interface GigabitEthernet1/1/2
+ speed auto 1000
+!
+interface Vlan1
+ ip vrf forwarding apple
+ ip address 10.0.1.4 255.255.255.0
+!
+interface Vlan2
+ ip vrf forwarding samsung
+ ip address 10.0.1.4 255.255.255.0
+!
+router ospf 1 vrf apple
+ router-id 8.8.8.8
+ network 10.0.1.0 0.0.0.255 area 0
+!
+router ospf 2 vrf samsung
+ router-id 9.9.9.9
+ network 10.0.1.0 0.0.0.255 area 0
+!
+!
+ip http server
+ip http secure-server
+!
+!
+logging esm config
+!
+!
+!
+line con 0
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+end
+
